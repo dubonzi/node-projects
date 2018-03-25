@@ -1,2 +1,2 @@
 # node-study-examples
-Code created during my study and learning of Node.js
+Small projects and code examples created during my study and learning of Node.js.
