@@ -13,9 +13,12 @@ const getWeather = (location, callback) => {
     if (!err && res.statusCode === 200) {
       let temperature = toCelsius(body.currently.temperature);
       let apparentTemperature = toCelsius(body.currently.apparentTemperature);
+      let precipChance = body.currently.precipProbability * 100;
+      
       let result = {
         temperature,
-        apparentTemperature
+        apparentTemperature,
+        precipChance
       };
       callback(null, result);
     } else {

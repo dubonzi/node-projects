@@ -7,9 +7,12 @@
 `node app.js [command]`
 
 ### Avaliable commands are:
- - `add --title="" --body=""`
- - `list`
- - `remove --title=""`
- - `read --title=""`
+
+| Commands | Parameter | Description |
+|-|-|-|
+|`add`    | `--title="" --body=""`    | Add a note with the especified title and body|
+|`list`   |                           | List all the notes|
+|`remove` | `--title=""`              | Remove a note|
+|`read`   | `--title=""`              | Read a note|
 
 

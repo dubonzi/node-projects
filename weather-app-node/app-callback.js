@@ -17,6 +17,7 @@ geocode.getGeocodeInfo((errorMessage, results) => {
         console.log(errorMessage);
       } else {
         console.log(`It's currently ${weatherResults.temperature}, but it feels like ${weatherResults.apparentTemperature}.`);
+        console.log(`There's a ${weatherResults.precipChance}% chance of raining.`);
       }
     });
   }

@@ -9,6 +9,7 @@
   "author": "Eduardo Bonzi",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "dotenv": "^5.0.1",
     "request": "^2.85.0",
     "yargs": "^11.0.0"
