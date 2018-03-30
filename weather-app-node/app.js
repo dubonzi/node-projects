@@ -1,10 +1,28 @@
 require('dotenv').config();
 const request = require('request');
-const googleApiKey = process.env.GOOGLE_API_KEY;
+const geocode = require('./geocode/geocode');
+const weather = require('./weather/weather');
 
-request({
-  url: `https://maps.googleapis.com/maps/api/geocode/json?key=${googleApiKey}&address=avenida%20paulista%20s%C3%A3o%20paulo%20650`,
-  json: true
-}, (err, res, body) => {
-  console.log(JSON.stringify(body, null, 2));
-})
+geocode.getGeocodeInfo((errorMessage, results) => {
+  if (errorMessage) {
+    console.log(errorMessage);
+  } else {
+    console.log(results.address);
+    let location = {
+      lat: results.latitude,
+      lng: results.longitude
+    };
+    weather.getWeather(location, (errorMessage, weatherResults) => {
+      if (errorMessage) {
+        console.log(errorMessage);
+      } else {
+        console.log(`It's currently ${weatherResults.temperature}, but it feels like ${weatherResults.apparentTemperature}.`);
+      }
+    });
+  }
+});
+
+let location = {
+  lat: -21.778533,
+  lng: -41.313475,
+}
