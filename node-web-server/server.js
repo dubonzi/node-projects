@@ -4,23 +4,23 @@ const hbs = require('hbs');
 const app = express();
 const port = process.env.PORT || '3000'
 
-let currentYear = new Date().getFullYear();
-
+hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
+
+hbs.registerHelper('getCurrentYear', () => new Date().getFullYear());
+hbs.registerHelper('screamIt', text => text.toUpperCase());
 
 app.get('/', (req, res) => {
   res.render('home.hbs', {
     pageName: 'Página Inicial',
     welcomeMessage: 'Bem vindo',
-    currentYear
   })
 });
 
 app.get('/about', (req, res) => {
   res.render('about.hbs', {
     pageName: 'Sobre',
-    currentYear
   });
 });
 
