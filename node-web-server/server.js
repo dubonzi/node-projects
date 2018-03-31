@@ -1,24 +1,36 @@
 const express = require('express')
+const hbs = require('hbs');
 
 const app = express();
+const port = process.env.PORT || '3000'
 
+let currentYear = new Date().getFullYear();
+
+app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-  res.send({nome: 'Eduardo', linguagens: ['JS', 'C#', 'JAVA']});
+  res.render('home.hbs', {
+    pageName: 'Página Inicial',
+    welcomeMessage: 'Bem vindo',
+    currentYear
+  })
 });
 
 app.get('/about', (req, res) => {
-  res.send('About page');
-});
-
-app.get('/bad', (req, res) => { 
-  res.json({
-    success: false,
-    message: 'Unable to process request'
+  res.render('about.hbs', {
+    pageName: 'Sobre',
+    currentYear
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+app.get('/bad', (req, res) => {
+  res.json({
+    success: false,
+    message: 'Não foi possível processar a requisição'
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Running on port ${port}`);
 });
