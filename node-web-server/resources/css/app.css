@@ -2,6 +2,9 @@ body {
   background-color: rgba(51, 51, 51, 1);
   color: antiquewhite;
 }
+a{
+  color: coral;
+}
 a:visited{
   color: deeppink;
 }
