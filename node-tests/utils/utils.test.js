@@ -21,3 +21,18 @@ it('should verify first and last names are set', () => {
     lastName: 'Bonzi'
   });
 });
+
+// Async
+it('should async add two numbers', (done) => {
+  utils.asyncAdd(4, 3, (sum) => {
+    expect(sum).toExist().toBe(7);
+    done();
+  });
+});
+
+it('should async square a number', (done) => {
+  utils.asyncSquare(10, (sqr) => {
+    expect(sqr).toExist().toBe(100);
+    done();
+  });
+});
