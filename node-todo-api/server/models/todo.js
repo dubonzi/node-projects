@@ -7,7 +7,7 @@ const Todo = mongoose.model('Todo', {
     minlength: 3,
     trim: true
   },
-  complete: {
+  completed: {
     type: Boolean,
     default: false
   },

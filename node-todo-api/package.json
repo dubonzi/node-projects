@@ -7,7 +7,6 @@
     "start": "node server/server.js",
     "test": "mocha --timeout=5000 server/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\""
-
   },
   "author": "Eduardo Bonzi",
   "license": "MIT",
@@ -15,6 +14,7 @@
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "lodash": "^4.17.5",
     "mongodb": "^3.0.5",
     "mongoose": "^5.0.13"
   },
