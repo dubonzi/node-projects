@@ -1,6 +1,6 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const { ObjectID } = require('mongodb');
 
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
@@ -22,6 +22,18 @@ app.post('/todos', (req, res) => {
   });
 });
 
+app.get('/todos/:id', (req, res) => {
+  let id = req.params.id;
+  if (!ObjectID.isValid(id)) {
+    res.status(404).send();
+  } else {
+    Todo.findById(id).then((doc) => {
+      doc ? res.send({doc}) : res.status(404).send();
+    }).catch((err) => {
+      res.status(400).send();
+    });
+  };
+});
 
 app.get('/todos', (req, res) => {
   Todo.find().then((docs) => {
