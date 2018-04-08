@@ -7,7 +7,8 @@ const authenticate = (req, res, next) => {
     if (!user) {
       return Promise.reject();
     }
-
+    //Adiciona o usuario e o token à requisição o que torna
+    //a informação disponível para todos que usarem o middleware 'authenticate'
     req.user = user;
     req.token = token;
     next();
