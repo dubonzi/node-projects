@@ -18,6 +18,19 @@ userRouter.post('/', (req, res) => {
   });
 });
 
+userRouter.post('/login', (req, res) => {
+  let login = _.pick(req.body, ['email', 'password']);
+
+  User.findByCredentials(login.email, login.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    });
+  }).catch((err) => {
+    console.log(err)
+    res.status(400).send();
+  });
+});
+
 userRouter.get('/me', authenticate, (req, res) => {
   res.send(req.user);
 });
