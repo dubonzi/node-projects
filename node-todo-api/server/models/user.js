@@ -38,8 +38,10 @@ UserSchema.methods.toJSON = function() {
   return _.pick(user, ['id', 'email']);
 };
 
-UserSchema.methods.generateAuthToken = function() { // Está usando function() para ter acesso ao 'this', 
-  let user = this;                                 //que é o valor do usuario que está chamando a função
+/* Está usando function() para ter acesso ao 'this', 
+  que é o valor do usuario que está chamando a função */
+UserSchema.methods.generateAuthToken = function() {
+  let user = this;
   let access = 'auth';
   let token = jwt.sign({ _id: user._id.toHexString(), access }, 'secret').toString();
 
@@ -48,6 +50,23 @@ UserSchema.methods.generateAuthToken = function() { // Está usando function() p
 
   return user.save().then(() => {
     return token;
+  });
+};
+
+UserSchema.statics.findByToken = function(token) {
+  let User = this;
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, 'secret');
+  } catch (err) {
+    return Promise.reject();
+  }
+
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
   });
 };
 
