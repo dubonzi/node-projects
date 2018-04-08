@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
-  return _.pick(user, ['id', 'email']);
+  return _.pick(user, ['_id', 'email']);
 };
 
 /* Está usando function() para ter acesso ao 'this', 
@@ -57,7 +57,6 @@ UserSchema.methods.generateAuthToken = function() {
 UserSchema.statics.findByToken = function(token) {
   let User = this;
   let decoded;
-
   try {
     decoded = jwt.verify(token, 'secret');
   } catch (err) {

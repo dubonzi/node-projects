@@ -22,4 +22,4 @@ userRouter.get('/me', authenticate, (req, res) => {
   res.send(req.user);
 });
 
-module.exports = {userRouter};
+module.exports = { userRouter };
