@@ -1,5 +1,10 @@
 const env = process.env.NODE_ENV || 'development';
 
-if(env !== 'production'){
-  process.env.PORT = 3000;
+if(env === 'development' || env === 'test'){
+  const config = require('./config.json');
+  const envConfig = config[env];
+  
+  Object.keys(envConfig).forEach((key) => {
+    process.env[key] = envConfig[key];
+  });
 }
