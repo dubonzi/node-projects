@@ -38,7 +38,6 @@ userRouter.delete('/me/token', authenticate, (req, res) => {
   req.user.removeToken(req.token).then(() => {
     res.status(200).send();
   }).catch((err) => {
-    console.log(err)
     res.status(400).send();
   });
 });
