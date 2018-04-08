@@ -214,7 +214,7 @@ describe('POST /users', () => {
         expect(user).toExist();
         expect(user.password).toNotBe(password);
         done();
-      });
+      }).catch((err) => done(err));
     });
   });
 
@@ -239,4 +239,53 @@ describe('POST /users', () => {
     .expect(400)
     .end(done);
   });
-})
+});
+
+describe('POST /users/login', () => {
+  it('should login user and return auth token', (done) => {
+    let email = users[1].email;
+    let password = users[1].password;
+    let userId = users[1]._id;
+    request(app)
+    .post('/users/login')
+    .send({ email, password})
+    .expect(200)
+    .expect((res) => {
+      //Verifica se a resposta contem um token gerado para o usuário caso o login esteja correto
+      expect(res.body.email).toBe(email);
+      expect(res.headers['x-auth']).toExist();
+    })
+    //Verifica se o token gerado foi salvo no banco de dados
+    //que é o resultado de generateAuthToken() ao fazer o login
+    .end((err, res) => {
+      User.findById(userId).then((user) => {
+        expect(user.tokens[0]).toInclude({
+          access: 'auth',
+          token: res.headers['x-auth']
+        });
+        done();
+      }).catch((err) => done(err));
+    });
+  });
+
+  it('should reject invalid login', (done) => {
+    let email = users[1].email;
+    let password = 'wrongPassword';
+    let userId = users[1]._id;
+    request(app)
+    .post('/users/login')
+    .send({ email, password})
+    .expect(400)
+    .expect((res) => {
+      expect(res.headers['x-auth']).toNotExist();
+    })
+    //Verifica se o token gerado foi salvo no banco de dados
+    //que é o resultado de generateAuthToken() ao fazer o login
+    .end((err, res) => {
+      User.findById(userId).then((user) => {
+        expect(user.tokens.length).toBe(0);
+        done();
+      }).catch((err) => done(err));
+    });
+  });
+});
