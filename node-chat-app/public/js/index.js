@@ -9,5 +9,8 @@ socket.on('disconnect', () => {
 });
 
 socket.on('newMessage', (msg) => {
-  console.log('New message', msg);
+  let data = new Date(msg.createdAt).toLocaleTimeString();
+
+  console.log(`${data} Nova mensagem de ${msg.from}:`);
+  console.log(msg.text);
 });
