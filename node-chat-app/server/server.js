@@ -13,13 +13,23 @@ const io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-  console.log('New client connected.');
-  
-  socket.on('disconnect', (socket) => {
-    console.log('Client disconnected.');
+  console.log('New client connected');
+
+  socket.emit('newMessage', {
+    from: 'Eduardo',
+    text: 'Mensagem teste',
+    createdAt: new Date().valueOf()
+  });
+
+  socket.on('createMessage', (msg) => {
+    msg.createdAt = new Date().valueOf();
+    console.log('createMessage', msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
   });
 });
-
 
 server.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
