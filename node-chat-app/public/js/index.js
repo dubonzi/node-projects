@@ -11,6 +11,13 @@ socket.on('disconnect', () => {
 socket.on('newMessage', (msg) => {
   let data = new Date(msg.createdAt).toLocaleTimeString();
 
-  console.log(`${data} Nova mensagem de ${msg.from}:`);
-  console.log(msg.text);
+  console.log(`[${data}] - ${msg.from} diz:`);
+  console.log('%c' + msg.text, 'color: green');
 });
+
+function mensagem(usuario, mensagem) {
+  socket.emit('createMessage', {
+    from: usuario,
+    text: mensagem
+  });
+}
