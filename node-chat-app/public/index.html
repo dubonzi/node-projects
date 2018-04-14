@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    
+
+<head>
+
     <meta charset="utf-8">
-  </head>
-  <body>
+</head>
+
+<body>
     <p>Bem vindo ao chat!</p>
-  </body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+          console.log('Connected to server.');
+        });
+
+        socket.on('disconnect', () => {
+          console.log('Disconnected from server.');
+        });
+    </script>
+</body>
+
 </html>
