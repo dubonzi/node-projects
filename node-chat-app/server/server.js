@@ -5,6 +5,7 @@ const socketIO = require('socket.io');
 const express = require('express');
 const _ = require('lodash');
 
+const { generateMessage } = require('./utils/message');
 const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
@@ -16,13 +17,16 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New client connected');
 
-  socket.emit('newMessage', {from: 'Admin', text: 'Bem vindo ao chat!', createdAt: new Date().valueOf()});
-  socket.broadcast.emit('newMessage', {from: 'Admin', text: 'Novo usuário conectado.', createdAt: new Date().valueOf()})
+  socket.emit('newMessage', generateMessage('Admin', 'Bem vindo ao chat!'));
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'Novo usuário conectado.'));
 
-  socket.on('createMessage', (newMsg) => {
-    let msg = _.pick(newMsg, ['from', 'text']);
-    msg.createdAt = new Date().valueOf();
-    io.emit('newMessage', msg);
+  socket.on('createMessage', (newMsg, callback) => {
+    if (_.has(newMsg, 'from') && _.has(newMsg, 'text')) {
+      let msg = _.pick(newMsg, ['from', 'text']);
+      io.emit('newMessage', generateMessage(msg.from, msg.text));
+    } else {
+      callback('Mensagem inválida');
+    }
   });
 
   socket.on('disconnect', () => {

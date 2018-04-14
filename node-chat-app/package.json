@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/**/*.test.js",
+    "test-watch" : "nodemon --exec \"npm test\"",
+    "start": "node server/server.js"
   },
   "engines": {
     "node": "9.8.0"
@@ -16,5 +17,10 @@
     "express": "^4.16.3",
     "lodash": "^4.17.5",
     "socket.io": "^2.1.0"
+  },
+  "devDependencies": {
+    "expect": "^22.4.3",
+    "mocha": "^5.1.0",
+    "nodemon": "^1.17.3"
   }
 }

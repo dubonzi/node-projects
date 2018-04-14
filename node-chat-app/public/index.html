@@ -9,7 +9,15 @@
 <body>
     <p>Bem vindo ao chat!</p>
 
+    <form id="message-form">
+      <input name="message" type="text" placeholder="Type your message" />
+      <button type="submit">Send</button>
+    </form>
+
+    <ul id="messages"></ul>
+
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery-3.3.1.min.js"></script>
     <script src="/js/index.js"></script>
         
 </body>
