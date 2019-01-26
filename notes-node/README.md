@@ -1,6 +1,6 @@
 # Notes
 
-### Simple program to practice working with json files and commands from the terminal.
+Simple program to practice working with json files and commands from the terminal.
 
 ## Usage
 
